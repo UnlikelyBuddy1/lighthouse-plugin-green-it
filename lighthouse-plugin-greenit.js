@@ -1,6 +1,7 @@
+console.log(__dirname);
 module.exports = {
         audits: [
-                { path: 'audits/greenit-audit.js' },
+                { path: `${__dirname}/audits/greenit-audit.js` },
         ],
         category: {
                 title: 'Green IT',
