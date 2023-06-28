@@ -1,4 +1,3 @@
-console.log(__dirname);
 module.exports = {
         audits: [
                 { path: `${__dirname}/audits/greenit-audit.js` },
