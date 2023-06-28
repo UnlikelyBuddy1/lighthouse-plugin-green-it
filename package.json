@@ -1,6 +1,6 @@
 {
   "name": "lighthouse-plugin-greenit",
-  "version": "1.1.0",
+  "version": "0.0.1",
   "description": "plugin for lighthouse that uses Eco index's calculation methods to give a green it score",
   "main": "lighthouse-plugin-greenit.js",
   "keywords": [
