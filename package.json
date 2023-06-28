@@ -1,6 +1,6 @@
 {
   "name": "lighthouse-plugin-green-it",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "description": "plugin for lighthouse that uses Eco index's calculation methods to give a green it score",
   "main": "lighthouse-plugin-green-it.js",
   "keywords": [
@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/UnlikelyBuddy1/lighthouse-plugin-green-it#readme",
   "scripts": {
-    "lighthouse": "lighthouse --plugins=lighthouse-plugin-green-it --view"
+    "lighthouse": "lighthouse --plugins=lighthouse-plugin-green-it --view --output-path results/report.html"
   },
   "author": "Adrianos SIDIRAS GALANTE",
   "license": "ISC",
@@ -30,5 +30,9 @@
   },
   "devDependencies": {
     "lighthouse": "^9.6.8"
+  },
+  "dependencies": {
+    "axios": "^1.4.0",
+    "lodash.sortby": "^4.7.0"
   }
 }

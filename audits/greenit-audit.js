@@ -9,7 +9,7 @@ class GreenItAudit extends Audit {
                         title: 'Page is eco-friendly',
                         description: 'Check if the page is optimized for eco-friendly practices.',
                         requiredArtifacts: ['DOMStats', 'devtoolsLogs'],
-                        failureTitle: 'could not get greenit scoring'
+                        failureTitle: 'Page is not eco-friendly'
                 };
         }
 
