@@ -21,6 +21,16 @@ class GreenItAudit extends Audit {
                         const totalPageSize = +((networkRecords.reduce((totalSize, record) => totalSize + record.transferSize, 0)) / 1000).toFixed(1);
                         const numberOfRequests = networkRecords.length;
                         const results = analyzeWebCarbon({ 'dom': domSize, 'req': numberOfRequests, 'size': totalPageSize });
+                        /*
+                        The EcoIndex scoring algorithm has been adjusted in this context to address perceived shortcomings in its original form.
+                        The initial approach appeared to disproportionately penalize scores based on the quantity of DOM elements.
+                        This adjustment is aimed at rectifying this perceived imbalance.
+                        A key requirement of this modification was to ensure that it had no impact on the calculations for CO2 emissions and water usage.
+                        As such, the modification involves a simple addition of 10 points to the score.
+                        This adjustment is justified with the case study of a webpage such as 'example.com'. 
+                        Despite its efficient characteristics of this page, such as a weight of 1kb, the presence of only 5 DOM elements, and a single request,
+                        the original EcoIndex scoring failed to award it the optimal score of 100. This modification seeks to address and correct such instances.
+                        */
                         const details = {
                                 type: 'table',
                                 headings: [
@@ -57,10 +67,11 @@ function analyzeWebCarbon(metrics) {
         const totalRequests = metrics.req;
         const totalPageSize = metrics.size;
         const ecoIndex = +(computeEcoIndex(domSize, totalRequests, totalPageSize)).toFixed(0);
-        const grade = getEcoIndexGrade(ecoIndex);
+        const mod_ecoIndex = ecoIndex + 10 > 100 ? 100 : ecoIndex + 10;
+        const grade = getEcoIndexGrade(mod_ecoIndex);
         const ghg = computeGreenhouseGasesEmissionfromEcoIndex(ecoIndex);
         const water = computeWaterConsumptionfromEcoIndex(ecoIndex);
-        return { dom: domSize, requests: totalRequests, size: totalPageSize, score: ecoIndex, grade: grade, ghg: ghg, water: water };
+        return { dom: domSize, requests: totalRequests, size: totalPageSize, score: mod_ecoIndex, grade: grade, ghg: ghg, water: water };
 }
 
 /**
@@ -102,8 +113,8 @@ function computeQuantile(quantiles, value) {
  * @returns {string} - The corresponding grade.
  */
 function getEcoIndexGrade(ecoIndex) {
-        if (ecoIndex >= 80) return "A";
-        if (ecoIndex >= 70) return "B";
+        if (ecoIndex >= 90) return "A";
+        if (ecoIndex >= 75) return "B";
         if (ecoIndex >= 55) return "C";
         if (ecoIndex >= 40) return "D";
         if (ecoIndex >= 25) return "E";
